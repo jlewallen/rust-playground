@@ -1,0 +1,7 @@
+target
+*.rs.bk
+[._]*.sw[a-p]
+/target
+/build
+/.gdb_history
+Cargo.lock
