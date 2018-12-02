@@ -12,8 +12,24 @@ documentation = "https://atsamd-rs.github.io/atsamd/atsamd21g18a/feather_m0/"
 [dependencies]
 bare-metal = { version = "0.2.4", features = ["const-fn"] }
 cortex-m = "0.5.8"
-cortex-m-rtfm = "0.4.0-beta.2"
+cortex-m-rtfm = "0.3.4"
+atsamd21g18a = "0.3.1"
 nb = "0.1.1"
+
+[[example]]
+name = "serial"
+
+[[example]]
+name = "blinky_basic"
+
+[[example]]
+name = "rtfm"
+
+[[example]]
+name = "rtfm_blink"
+
+[[example]]
+name = "usb_serial"
 
 [dependencies.embedded-hal]
 features = ["unproven"]
@@ -33,10 +49,10 @@ panic-abort = "~0.3"
 panic-semihosting = "~0.5"
 panic_rtt = "~0.1"
 cortex-m-semihosting = "~0.3"
-cortex-m-rtfm = "0.4.0-beta.2"
+cortex-m-rtfm = "0.3.4"
 
 [features]
-default = ["rt", "atsamd21-hal/samd21g18a"]
+default = ["rt", "atsamd21-hal/samd21g18a", "usb"]
 rt = ["cortex-m-rt", "atsamd21-hal/samd21g18a-rt"]
 unproven = ["atsamd21-hal/unproven"]
 use_rtt = ["atsamd21-hal/use_rtt"]
