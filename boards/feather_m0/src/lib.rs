@@ -11,10 +11,14 @@ pub use cortex_m_rt::entry;
 pub use cortex_m_rt::interrupt;
 
 pub use hal::atsamd21g18a::*;
-use hal::prelude::*;
 pub use hal::*;
 
-use gpio::{Floating, Input, Port};
+use hal::prelude::*;
+use hal::atsamd21g18a::gclk::clkctrl::GENR;
+use hal::atsamd21g18a::gclk::genctrl::SRCR;
+
+use hal::gpio::{Floating, Input, Port};
+use hal::gpio::IntoFunction;
 use hal::clock::GenericClockController;
 use hal::sercom::{I2CMaster3, PadPin, SPIMaster4};
 use hal::time::Hertz;
@@ -25,65 +29,37 @@ pub use hal::usb::UsbBus;
 use usb_device::bus::UsbBusWrapper;
 
 define_pins!(
-    /// Maps the pins to their arduino names and
-    /// the numbers printed on the board.
     struct Pins,
     target_device: atsamd21g18a,
 
-    /// Analog pin 0.  Can act as a true analog output
-    /// as it has a DAC (which is not currently supported
-    /// by this hal) as well as input.
     pin a0 = a2,
-
-    /// Analog Pin 1
     pin a1 = b8,
-    /// Analog Pin 2
     pin a2 = b9,
-    /// Analog Pin 3
     pin a3 = a4,
-    /// Analog Pin 4
     pin a4 = a5,
-    /// Analog Pin 5
     pin a5 = b2,
 
     pin tx = b22,
     pin rx = b23,
 
-    /// Pin 0, rx
     pin d0 = a11,
-    /// Pin 1, tx
     pin d1 = a10,
-    /// Pin 5, PWM capable
     pin d5 = a15,
-    /// Pin 6, PWM capable
     pin d6 = a20,
-    /// Pin 9, PWM capable.  Also analog input (A7)
     pin d9 = a7,
-    /// Pin 10, PWM capable
     pin d10 = a18,
-    /// Pin 11, PWM capable
     pin d11 = a16,
-    /// Pin 12, PWM capable
     pin d12 = a19,
-    /// Pin 13, which is also attached to
-    /// the red LED.  PWM capable.
     pin d13 = a17,
 
-    /// The I2C data line
     pin sda = a22,
-    /// The I2C clock line
     pin scl = a23,
 
-    /// The SPI SCK
     pin sck = b11,
-    /// The SPI MOSI
     pin mosi = b10,
-    /// The SPI MISO
     pin miso = a12,
 
-    /// The USB D- pad
     pin usb_dm = a24,
-    /// The USB D+ pad
     pin usb_dp = a25,
 );
 
@@ -149,11 +125,8 @@ pub fn usb_bus(
     dp: gpio::Pa25<Input<Floating>>,
     port: &mut Port,
 ) -> UsbBusWrapper<UsbBus> {
-    let gclk0 = clocks.gclk0();
-    dbgprint!("making usb clock");
-    let clk6 = clocks.configure_gclk_divider_and_source(6, 1, gclk0, false);
+    let clk6 = clocks.configure_gclk_divider_and_source(GENR::GCLK6, 1, SRCR::DFLL48M, false).unwrap();
     let usb_clock = &clocks.usb(&clk6).unwrap();
-    dbgprint!("got clock");
     UsbBusWrapper::new(UsbBus::new(
         usb_clock,
         pm,
