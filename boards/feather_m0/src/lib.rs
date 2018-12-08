@@ -63,9 +63,6 @@ define_pins!(
     pin usb_dp = a25,
 );
 
-/// Convenience for setting up the labelled SPI peripheral.
-/// This powers up SERCOM4 and configures it for use as an
-/// SPI Master in SPI Mode 0.
 pub fn spi_master<F: Into<Hertz>>(
     clocks: &mut GenericClockController,
     bus_speed: F,
@@ -94,8 +91,6 @@ pub fn spi_master<F: Into<Hertz>>(
     )
 }
 
-/// Convenience for setting up the labelled SDA, SCL pins to
-/// operate as an I2C master running at the specified frequency.
 pub fn i2c_master<F: Into<Hertz>>(
     clocks: &mut GenericClockController,
     bus_speed: F,

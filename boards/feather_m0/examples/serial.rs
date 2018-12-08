@@ -4,7 +4,7 @@
 extern crate cortex_m;
 extern crate feather_m0 as hal;
 #[cfg(not(feature = "use_semihosting"))]
-extern crate panic_abort;
+extern crate panic_halt;
 
 #[cfg(feature = "rt")]
 extern crate cortex_m_rt;

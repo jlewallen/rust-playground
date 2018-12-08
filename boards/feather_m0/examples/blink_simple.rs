@@ -4,10 +4,7 @@
 extern crate cortex_m;
 extern crate cortex_m_semihosting;
 extern crate feather_m0 as hal;
-#[cfg(not(feature = "use_semihosting"))]
-extern crate panic_abort;
-#[cfg(feature = "use_semihosting")]
-extern crate panic_semihosting;
+extern crate panic_halt;
 
 use hal::clock::GenericClockController;
 use hal::delay::Delay;
