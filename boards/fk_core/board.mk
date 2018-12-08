@@ -1,7 +1,7 @@
 #
 
 board = fk_core
-examples = blink_simple
+examples = blink_simple debug_serial
 bins = $(examples:%=$(BUILD)/$(board)/debug/%.bin)
 elfs = $(examples:%=$(BUILD)/$(board)/debug/%.elf)
 

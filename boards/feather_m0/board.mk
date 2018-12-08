@@ -1,7 +1,7 @@
 #
 
 board = feather_m0
-examples = blink_simple serial usb_serial rtfm rtfm_blink
+examples = blink_simple usb_serial rtfm rtfm_blink
 bins = $(examples:%=$(BUILD)/$(board)/debug/%.bin)
 elfs = $(examples:%=$(BUILD)/$(board)/debug/%.elf)
 

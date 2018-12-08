@@ -2,14 +2,8 @@
 #![no_main]
 
 extern crate cortex_m;
-extern crate feather_m0 as hal;
-#[cfg(not(feature = "use_semihosting"))]
+extern crate fk_core as hal;
 extern crate panic_halt;
-
-#[cfg(feature = "rt")]
-extern crate cortex_m_rt;
-
-use cortex_m::asm;
 
 pub use hal::atsamd21g18a::{Peripherals, CorePeripherals};
 pub use hal::atsamd21g18a::interrupt;
@@ -46,11 +40,11 @@ fn main() -> ! {
         clocks.configure_gclk_divider_and_source(GENR::GCLK2, 1, SRCR::DFLL48M, false);
         let gclk2 = clocks.get_gclk(GENR::GCLK2).unwrap();
         let rx_pin: Sercom5Pad3 = pins
-            .rx
+            .debug_rx
             .into_pull_down_input(&mut pins.port)
             .into_pad(&mut pins.port);
         let tx_pin: Sercom5Pad2 = pins
-            .tx
+            .debug_tx
             .into_push_pull_output(&mut pins.port)
             .into_pad(&mut pins.port);
         let uart_clk = clocks
