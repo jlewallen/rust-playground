@@ -2,14 +2,13 @@
 #![no_main]
 
 extern crate cortex_m;
-extern crate cortex_m_semihosting;
 extern crate fk_core as hal;
 extern crate panic_halt;
 
-use hal::clock::GenericClockController;
-use hal::delay::Delay;
 use hal::prelude::*;
 use hal::{entry, CorePeripherals, Peripherals};
+use hal::clock::GenericClockController;
+use hal::delay::Delay;
 
 #[entry]
 fn main() -> ! {
